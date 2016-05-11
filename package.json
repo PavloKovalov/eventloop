@@ -2,7 +2,7 @@
   "name": "eventloop",
   "version": "0.1.0",
   "description": "JavaScript: Event loop expained",
-  "main": "lib/index.js",
+  "main": "index.html",
   "scripts": {
     "clean": "rimraf dist",
     "build": "NODE_ENV=production webpack --config webpack.config.production.js",
