@@ -50,8 +50,16 @@ const images = {
   wut: require("../assets/wut.gif"),
   city: require("../assets/city.jpg"),
 
+  engine: {
+    callstack: require("../assets/callstack.png"),
+    heap: require("../assets/heap.png")
+  },
   calc: {
     empty: require("../assets/callstack_empty.png")
+  },
+
+  fun: {
+    crying: require("../assets/but_where.png")
   }
 };
 
@@ -65,13 +73,17 @@ const theme = createTheme({
 
 export default class Presentation extends React.Component {
   render() {
-    var columnStyle = {
+    const txtColor = (v) => ({
+      color: v
+    });
+
+    const columnStyle = {
       minHeight: '60vh',
       display: 'flex',
       flexDirection: 'column-reverse'
     };
 
-    var stackItemStyle = {
+    const stackItemStyle = {
       fontSize: '0.8em',
       fontWeight: 'bold',
       fontFamily: 'Consolas, Monaco, \'Andale Mono\', \'Ubuntu Mono\', monospace',
@@ -84,10 +96,21 @@ export default class Presentation extends React.Component {
       textShadow: '1px 1px black'
     };
 
+    const shadowStyle = (style) => {
+      const shaddow = {
+        dark: '4px -2px 0 #333',
+        light: '-1px 1px 0 #666'
+      };
+
+      return {
+        textShadow: shaddow[style]
+      };
+    };
+
     return (
       <Spectacle theme={theme}>
         <Deck transition={["fade"]} progress="pacman">
-          <Slide transition={["zoom"]} bgColor="js_slave">
+          <Slide bgColor="js_slave">
             <Heading size={1} caps lineHeight={1} textColor="white">
               How does
             </Heading>
@@ -110,12 +133,12 @@ export default class Presentation extends React.Component {
 
           <Slide transition={["slide"]} notes="You can even put notes on your slide. How awesome is that?" bgColor="js_slave">
             <BlockQuote>
-              <Quote>JavaScript is a</Quote>
+              <Quote textColor="white">JavaScript is a</Quote>
               <Quote textColor="js_prime">high-level,</Quote>
               <Quote textColor="js_prime">dynamic,</Quote>
               <Quote textColor="js_prime">untyped,</Quote>
               <Quote textColor="js_prime">interpreted</Quote>
-              <Quote>programming language</Quote>
+              <Quote textColor="white">programming language</Quote>
               <Cite>Wikipedia</Cite>
             </BlockQuote>
           </Slide>
@@ -131,7 +154,7 @@ export default class Presentation extends React.Component {
 
           <Slide transition={["slide"]} notes="Before diving into the event loop, we need a basic understanding of the JavaScript Engine and what it does." bgColor="js_slave">
             <BlockQuote>
-              <Quote>A JavaScript engine is an interpreter that interprets JavaScript source code and executes the script accordingly.</Quote>
+              <Quote textColor="white">A JavaScript engine is an interpreter that interprets JavaScript source code and executes the script accordingly.</Quote>
               <Cite>Wikipedia</Cite>
             </BlockQuote>
           </Slide>
@@ -144,13 +167,13 @@ export default class Presentation extends React.Component {
               it’s job is to go through all the lines of JavaScript in an application
             </Text>
             <Text bold fit>
-              and process them one at a time
+              and process them <span style={txtColor('#ddd')}>one at a time</span>
             </Text>
             <Text italic bold fit textColor="js_prime">
               single-threaded
             </Text>
             <Text fit bold>
-              long operations cause <S type="italic" textColor="white">blocking</S>
+              <span style={txtColor('#ddd')}>long</span> operations cause <S type="italic" style={txtColor('#FF9800')}>blocking</S>
             </Text>
           </Slide>
 
@@ -160,7 +183,6 @@ export default class Presentation extends React.Component {
             code={code.callstack}
             ranges={[
               { loc: [0, 15], title: "Simple Example" },
-              { loc: [0, 15], title:"The Call Stack" },
               { loc: [0, 4], note: "define function \"getTheAnswer\"" },
               { loc: [5, 11], note: "define function askBro" },
               { loc: [11, 12], note: "call function askBro"},
@@ -172,9 +194,22 @@ export default class Presentation extends React.Component {
               { loc: [8, 9], note: "get back with return value \"42\""},
               { loc: [9, 10], note: "nothing to execute, exiting function"},
               { loc: [11, 12], note: "function executed"},
-              { loc: [12, 13], note: "whoa!", title: "That's all, Folks!" },
+              { loc: [12, 13], note: "wow!", title: "That's all, Folks!" },
             ]}
           />
+          
+          <Slide >
+            <Heading fit size={4} textColor="js_prime" style={shadowStyle('light')}>V8, SpiderMonkey, ChakraCore</Heading>
+            <Heading size={3} textColor="#f5f5f5" style={shadowStyle('dark')}>heap + call stack</Heading>
+            <Layout>
+              <Fill>
+                <Image src={images.engine.heap.replace("/", "")} height="400px"/>
+              </Fill>
+              <Fill>
+                <Image src={images.engine.callstack.replace("/", "")} height="400px"/>
+              </Fill>
+            </Layout>
+          </Slide>
 
           <CodeSlide
             transition={["slide"]}
@@ -207,6 +242,12 @@ export default class Presentation extends React.Component {
             ]}
           />
 
+          <Slide >
+            <Heading fit size={2} textColor="js_prime" style={shadowStyle('light')}>
+              …blocking…
+            </Heading>
+          </Slide>
+
           <CodeSlide
             transition={["slide"]}
             lang="js"
@@ -218,7 +259,7 @@ export default class Presentation extends React.Component {
               {
                 loc: [10, 11],
                 note: '[ sleep(10) ]',
-                title: React.createElement('iframe', { src: '//giphy.com/embed/oKVs1VY0MKfvO', width: 480, height: 253 })
+                title: React.createElement('img', { src: '//media.giphy.com/media/l3V0BVDTyuMzwpS1i/giphy.gif', width: 480, height: 253 })
               },
               { loc: [11, 12], note: '[ console.log(…) ]' },
               { loc: [12, 14], note: React.createElement('span', { dangerouslySetInnerHTML: {__html: "&#x2728;"}})}
@@ -240,6 +281,13 @@ export default class Presentation extends React.Component {
                       textColor="js_prime">jsfiddle.net/d1wx1rjd</Link>
               </Fill>
             </Layout>
+          </Slide>
+
+          <Slide>
+            <Heading size={4} fit textColor="js_prime" style={shadowStyle('light')}>…but, where is all async &#x2728; magic?!?!</Heading>
+            <Appear fid="1">
+              <Image src={images.fun.crying.replace("/", "")} width="60%"/>
+            </Appear>
           </Slide>
 
 
