@@ -42,7 +42,9 @@ const code = {
   calc: require("raw!../assets/callstack_calc.example"),
   blocking: require("raw!../assets/callstack_blocking.example"),
   blockingDemo: require("raw!../assets/callstack_blocking_demo.example"),
-  callstack: require("raw!../assets/callstack.example")
+  callstack: require("raw!../assets/callstack.example"),
+  callstackError: require("raw!../assets/callstack_error.example"),
+  callstackLoop: require("raw!../assets/callstack_loop.example")
 };
 
 const images = {
@@ -54,6 +56,12 @@ const images = {
     callstack: require("../assets/callstack.png"),
     heap: require("../assets/heap.png")
   },
+
+  callstack: {
+    error: require("../assets/callstack_error.png"),
+    loop: require("../assets/callstack_loop.png")
+  },
+
   calc: {
     empty: require("../assets/callstack_empty.png")
   },
@@ -242,6 +250,43 @@ export default class Presentation extends React.Component {
             ]}
           />
 
+          <CodeSlide
+            transition={["slide"]}
+            lang="js"
+            code={code.callstackError}
+            ranges={[
+              { loc: [0, 17] },
+              { loc: [0, 12], note: "defined functions" },
+              { loc: [12, 14 ], note: "" },
+              { loc: [9, 11], note: "" },
+              { loc: [5, 7], note: "" },
+              { loc: [1, 3], note: "" },
+              { loc: [1, 3], title: React.createElement('img', { src: images.callstack.error, style: { width: '700px', zIndex: 1000 } }) }
+             ]}
+          />
+
+          <CodeSlide
+            transition={["slide"]}
+            lang="js"
+            code={code.callstackLoop}
+            ranges={[
+              { loc: [0, 7] },
+              { loc: [0, 4], note: "function 'foo' that calls itself" },
+              { loc: [4, 6], note: "call foo()" },
+              { loc: [1, 3], note: "[ foo() ]" },
+              { loc: [1, 3], note: "[ foo() ]\n[ foo() ]" },
+              { loc: [1, 3], note: "[ foo() ]\n[ foo() ]\n[ foo() ]" },
+              { loc: [1, 3], note: "[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]" },
+              { loc: [1, 3], note: "[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]" },
+              { loc: [1, 3], note: "[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]" },
+              { loc: [1, 3], note: "[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]\n[ foo() ]" },
+              {
+                loc: [1, 3],
+                title: React.createElement('img', { src: images.callstack.loop, style: { width: '700px' } })
+              }
+             ]}
+          />
+
           <Slide >
             <Heading fit size={2} textColor="js_prime" style={shadowStyle('light')}>
               …blocking…
@@ -290,6 +335,37 @@ export default class Presentation extends React.Component {
             </Appear>
           </Slide>
 
+          <Slide>
+            <Heading size={4}>consider async is...</Heading>
+            <List>
+              <Appear fid="1">
+                <ListItem>
+                  <Text>DOM Events</Text>
+                </ListItem>
+              </Appear>
+              <Appear fid="2">
+                <ListItem>
+                  <Text>Timeouts</Text>
+                </ListItem>
+              </Appear>
+              <Appear fid="3">
+                <ListItem>
+                  <Text>AJAX</Text>
+                </ListItem>
+              </Appear>
+              <Appear fid="4">
+                <ListItem>
+                  <Text>Web Workers</Text>
+                </ListItem>
+              </Appear>
+              <Appear fid="5">
+                <ListItem>
+                  <Text>and more…</Text>
+                </ListItem>
+              </Appear>
+            </List>
+
+          </Slide>
 
         </Deck>
       </Spectacle>
