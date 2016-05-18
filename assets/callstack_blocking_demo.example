@@ -1,5 +1,5 @@
 <div>
-  <button onclick="sleep()"></button>
+  <button onclick="sleep()">sleep</button>
   <div id="spinner"></div>
 </div>
 
