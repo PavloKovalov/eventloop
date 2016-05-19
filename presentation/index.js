@@ -203,7 +203,7 @@ export default class Presentation extends React.Component {
             lang="js"
             code={code.callstack}
             ranges={[
-              { loc: [0, 15], title: "Simple Example" },
+              { loc: [0, 15], title: "Let's do like an engine" },
               { loc: [0, 4], note: "define function \"getTheAnswer\"" },
               { loc: [5, 11], note: "define function askBro" },
               { loc: [11, 12], note: "call function askBro"},
@@ -219,7 +219,9 @@ export default class Presentation extends React.Component {
             ]}
           />
           
-          <Slide note="there no DOM, timers, AJAX in JS engine">
+          <Slide notes="what engine consists of<br>
+          the heap - for memory allocation<br>
+          callstack - the sake of execution">
             <Heading fit size={4} textColor="js_prime" style={shadowStyle('light')}>V8, SpiderMonkey, ChakraCore</Heading>
             <Heading size={3} textColor="#f5f5f5" style={shadowStyle('dark')}>heap + call stack</Heading>
             <Layout>
@@ -267,8 +269,11 @@ export default class Presentation extends React.Component {
             transition={["slide"]}
             lang="js"
             code={code.callstackError}
+            notes="what's happen when error occur<br>
+            let's simulate an error thrown<br>
+            error stops execution<br>"
             ranges={[
-              { loc: [0, 17] },
+              { loc: [0, 17], title: "Errors" },
               { loc: [0, 12], note: "defined functions" },
               { loc: [12, 14 ], note: "[ bar() ]" },
               { loc: [9, 11], note: "[ foo() ]\n[ bar() ]" },
@@ -287,9 +292,13 @@ export default class Presentation extends React.Component {
           <CodeSlide
             transition={["slide"]}
             lang="js"
+            notes="to understand recursion you must understand recursion<br>
+            but js engine doesn't care<br>
+            it will watch for your code<br>
+            and prevent long execution"
             code={code.callstackLoop}
             ranges={[
-              { loc: [0, 7] },
+              { loc: [0, 7], title: "Recursion" },
               { loc: [0, 4], note: "function 'foo' that calls itself" },
               { loc: [4, 6], note: "call foo()" },
               { loc: [1, 3], note: "[ foo() ]" },
@@ -309,7 +318,7 @@ export default class Presentation extends React.Component {
              ]}
           />
 
-          <Slide >
+          <Slide notes="what does it mean from engine point?">
             <Heading fit size={2} textColor="js_prime" style={shadowStyle('light')}>
               …blocking…
             </Heading>
@@ -318,6 +327,10 @@ export default class Presentation extends React.Component {
           <CodeSlide
             transition={["slide"]}
             lang="js"
+            notes="consider we have long running function<br>
+            executing this function will block call stack<br>
+            as it's run code lines one after the other<br>
+            it's not going to do something before heavy calculations is done"
             code={code.blocking}
             ranges={[
               { loc: [0, 14], title: "Blocking" },
@@ -341,7 +354,11 @@ export default class Presentation extends React.Component {
             ]}
           />
 
-          <Slide bgColor="js_slave">
+          <Slide bgColor="js_slave"
+            notes="what does it mean from browser point<br>
+            if we call some have computation<br>
+            browser will be 'frozen'<br>
+            and won't react until callstack is unblocked">
             <Layout>
               <Fill>
                 <Heading size={3} textColor="js_prime">index.html</Heading>
@@ -358,7 +375,14 @@ export default class Presentation extends React.Component {
             </Layout>
           </Slide>
 
-          <Slide bgColor="js_slave">
+          <Slide notes="most slow op is a I/O<br>
+          let's think of ajax when we talk about browser<br>
+          networking is slow and has a bunch of stuff to do<br>
+          not only bytes transfer – dns, https, redirects<br>
+          then we need to decode recieved bytes<br>
+          translate them in language object<br>
+          so if ajax would be sync end user will have problems"
+                 bgColor="js_slave">
             <Layout>
               <Fill>
                 <Heading size={3} textColor="js_prime">index.html</Heading>
@@ -385,11 +409,16 @@ export default class Presentation extends React.Component {
             <Heading fit textColor="js_prime">Browser</Heading>
           </Slide>
 
-          <Slide note="">
+          <Slide notes="exept JS engine browser has plenty of stuff</br>
+          WEB APIs - the web platform parts<br>
+          callback queue and mysterious event loop">
+            <Heading size={2} textColor="js_prime">browser internals</Heading>
+
             <Image height="80vh" src={images.browser.replace("/", "")} />
           </Slide>
 
-          <Slide bgColor="js_slave">
+          <Slide notes="let's start on simple and check how timeout works"
+                 bgColor="js_slave">
             <Heading size={4} textColor="js_prime">How does setTimeout works?</Heading>
 
             <Layout>
@@ -409,6 +438,8 @@ export default class Presentation extends React.Component {
           <CodeSlide
             transition={["slide"]}
             lang="js"
+            notes="to understand it we need to became JS engine again<br>
+            assume black bar in bottom represent our callstack"
             code={code.setTimeout}
             ranges={[
               { loc: [0, 9], title: "setTimeout", note: "" },
@@ -438,6 +469,8 @@ export default class Presentation extends React.Component {
           <CodeSlide
             transition={["slide"]}
             lang="js"
+            notes="oh well! what about ajax?<br>
+            spinning hourglasses means that web api executes some call"
             code={code.ajax}
             ranges={[
               { loc: [0, 10], title: "AJAX" },
@@ -475,55 +508,57 @@ export default class Presentation extends React.Component {
           </Slide>
 
           <Slide>
-            <Heading textColor="js_prime">Let's recap</Heading>
+            <Heading size={2} textColor="js_prime">Let's recap</Heading>
             <List>
-              <Appear fid="1">
+              <Appear>
                 <ListItem>
-                  <Text>JavaScript is single threaded</Text>
+                  <Heading size={4}>JavaScript is single threaded</Heading>
                 </ListItem>
               </Appear>
-              <Appear fid="2">
+              <Appear>
                 <ListItem>
-                  <Text>Long operations cause <S type="bold">blocking</S></Text>
+                  <Heading size={4}>Long operations cause blocking</Heading>
                 </ListItem>
               </Appear>
-              <Appear fid="3">
+              <Appear>
                 <ListItem>
-                  <Text>Call stack blocking cause <S type="bold">freezing</S></Text>
+                  <Heading size={4}>Call stack blocking cause “freezing”</Heading>
                 </ListItem>
               </Appear>
-              <Appear fid="4">
+              <Appear>
                 <ListItem>
-                  <Text>Async magic is a browser benefit</Text>
+                  <Heading size={4}>Async magic is a browser benefit</Heading>
                 </ListItem>
               </Appear>
             </List>
           </Slide>
 
           <Slide>
+            <Heading size={5} textColor="js_prime">Useful Links</Heading>
+
             <List>
               <ListItem>
-                <Link href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop">
+                <Link textColor="black" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop">
                   MDN - Concurrency model and Event Loop
                 </Link>
               </ListItem>
               <ListItem>
-                <Link href="http://altitudelabs.com/blog/what-is-the-javascript-event-loop/">
+                <Link textColor="black" href="http://altitudelabs.com/blog/what-is-the-javascript-event-loop/">
                   What is the JavaScript Event Loop?
                 </Link>
               </ListItem>
               <ListItem>
-                <Link href="http://blog.carbonfive.com/2013/10/27/the-javascript-event-loop-explained/">
+                <Link textColor="black" href="http://blog.carbonfive.com/2013/10/27/the-javascript-event-loop-explained/">
                   The JavaScript Event Loop: Explained
                 </Link>
               </ListItem>
               <ListItem>
-                <Link href="https://www.youtube.com/watch?v=8aGhZQkoFbQ">
+                <Link textColor="black" href="https://www.youtube.com/watch?v=8aGhZQkoFbQ">
                   Philip Roberts: What the heck is the event loop anyway? | JSConf EU 2014
                 </Link>
               </ListItem>
               <ListItem>
-                <Link href="https://nolanlawson.com/2015/09/29/indexeddb-websql-localstorage-what-blocks-the-dom/">
+                <Link textColor="black" href="https://nolanlawson.com/2015/09/29/indexeddb-websql-localstorage-what-blocks-the-dom/">
                   IndexedDB, WebSQL, LocalStorage – what blocks the DOM?
                 </Link>
               </ListItem>

@@ -5,8 +5,8 @@ function getTheAnswer() {
 
 function askBro() {
   // Hello, World!
-  // I'll call get you an answer right now!
-  getTheAnswer();
+  // I'll get you an answer right now!
+  return getTheAnswer();
 }
 
 askBro();
