@@ -497,11 +497,6 @@ export default class Presentation extends React.Component {
                   <Text>Async magic is a browser benefit</Text>
                 </ListItem>
               </Appear>
-              <Appear fid="5">
-                <ListItem>
-                  <Text>One more thing…</Text>
-                </ListItem>
-              </Appear>
             </List>
           </Slide>
 
