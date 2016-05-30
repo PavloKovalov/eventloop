@@ -256,7 +256,7 @@ export default class Presentation extends React.Component {
               {
                 loc: [1, 3],
                 note: React.createElement("img", {
-                  src: images.callstack.error,
+                  src: images.callstack.error.replace("/", ""),
                   style: { width: "100%" }
                 })
               }
@@ -284,7 +284,7 @@ export default class Presentation extends React.Component {
               {
                 loc: [1, 3],
                 note: React.createElement("img", {
-                  src: images.callstack.loop,
+                  src: images.callstack.loop.replace("/", ""),
                   style: { width: "100%" }
                 })
               }
