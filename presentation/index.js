@@ -6,28 +6,25 @@ import {
   Appear,
   BlockQuote,
   Cite,
-  Code,
   CodePane,
   Deck,
   Fill,
-  Fit,
   Heading,
   Image,
   Layout,
   Link,
   ListItem,
   List,
-  Markdown,
   Quote,
   S,
   Slide,
   Spectacle,
   Text
 } from "spectacle";
-import CodeSlide from 'spectacle-code-slide';
-import SleepySpinny from '../assets/spinner';
-import FakeAjax from '../assets/fake_ajax';
-import Timeouter from '../assets/set_timeout.js';
+import CodeSlide from "spectacle-code-slide";
+import SleepySpinny from "../assets/spinner";
+import FakeAjax from "../assets/fake-ajax";
+import Timeouter from "../assets/set-timeout";
 
 // Import image preloader util
 import preloader from "spectacle/lib/utils/preloader";
@@ -84,8 +81,8 @@ preloader(images);
 
 const theme = createTheme({
   primary: "gray", // "#ff4081",
-  js_prime: "#f3df49",
-  js_slave: "#2e2e2c"
+  jsPrime: "#f3df49",
+  jsSlave: "#2e2e2c"
 });
 
 export default class Presentation extends React.Component {
@@ -94,29 +91,10 @@ export default class Presentation extends React.Component {
       color: v
     });
 
-    const columnStyle = {
-      minHeight: '60vh',
-      display: 'flex',
-      flexDirection: 'column-reverse'
-    };
-
-    const stackItemStyle = {
-      fontSize: '0.8em',
-      fontWeight: 'bold',
-      fontFamily: 'Consolas, Monaco, \'Andale Mono\', \'Ubuntu Mono\', monospace',
-
-      border: '5px #f08d49 dotted',
-      padding: '10px 25px',
-      margin: '25px 0 0 20px',
-      color: '#f08d49',
-      borderRadius: '20px',
-      textShadow: '1px 1px black'
-    };
-
     const shadowStyle = (style) => {
       const shaddow = {
-        dark: '4px -2px 0 #333',
-        light: '-1px 1px 0 #666'
+        dark: "4px -2px 0 #333",
+        light: "-1px 1px 0 #666"
       };
 
       return {
@@ -124,18 +102,16 @@ export default class Presentation extends React.Component {
       };
     };
 
-    const ajaxLoader = <div>XHR
-      <img height="56px" src={images.hourglass.replace("/", "")}/>
-    </div>;
+    const ajaxLoader = <div>XHR<img height="56px" src={ images.hourglass.replace("/", "") }/></div>;
 
     return (
-      <Spectacle theme={theme}>
-        <Deck transition={["fade"]} progress="pacman">
-          <Slide bgColor="js_slave">
+      <Spectacle theme={ theme }>
+        <Deck transition={ ["fade"] } progress="pacman">
+          <Slide bgColor="jsSlave">
             <Heading size={1} caps lineHeight={1} textColor="white">
               How does
             </Heading>
-            <Heading size={1} fit textColor="js_prime">
+            <Heading size={1} fit textColor="jsPrime">
               JavaScript
             </Heading>
             <Heading size={1} caps textColor="white">
@@ -152,19 +128,19 @@ export default class Presentation extends React.Component {
             </Heading>
           </Slide>
 
-          <Slide transition={["slide"]} notes="You can even put notes on your slide. How awesome is that?" bgColor="js_slave">
+          <Slide transition={ ["slide"] } notes="You can even put notes on your slide. How awesome is that?" bgColor="jsSlave">
             <BlockQuote>
               <Quote textColor="white">JavaScript is a</Quote>
-              <Quote textColor="js_prime">high-level,</Quote>
-              <Quote textColor="js_prime">dynamic,</Quote>
-              <Quote textColor="js_prime">untyped,</Quote>
-              <Quote textColor="js_prime">interpreted</Quote>
+              <Quote textColor="jsPrime">high-level,</Quote>
+              <Quote textColor="jsPrime">dynamic,</Quote>
+              <Quote textColor="jsPrime">untyped,</Quote>
+              <Quote textColor="jsPrime">interpreted</Quote>
               <Quote textColor="white">programming language</Quote>
               <Cite>Wikipedia</Cite>
             </BlockQuote>
           </Slide>
 
-          <Slide transition={["slide"]} bgColor="black" notes="">
+          <Slide transition={ ["slide"] } bgColor="black" notes="">
             <Heading size={1} fit textColor="#f3df49">
               JavaScript
             </Heading>
@@ -173,14 +149,14 @@ export default class Presentation extends React.Component {
             </Heading>
           </Slide>
 
-          <Slide transition={["slide"]} notes="Before diving into the event loop, we need a basic understanding of the JavaScript Engine and what it does." bgColor="js_slave">
+          <Slide transition={ ["slide"] } notes="Before diving into the event loop, we need a basic understanding of the JavaScript Engine and what it does." bgColor="jsSlave">
             <BlockQuote>
               <Quote textColor="white">A JavaScript engine is an interpreter that interprets JavaScript source code and executes the script accordingly.</Quote>
               <Cite>Wikipedia</Cite>
             </BlockQuote>
           </Slide>
 
-          <Slide transition={["slide"]}>
+          <Slide transition={ ["slide"] }>
             <Heading size={2} textColor="white">
               JavaScript Engine
             </Heading>
@@ -188,20 +164,20 @@ export default class Presentation extends React.Component {
               it’s job is to go through all the lines of JavaScript in an application
             </Text>
             <Text bold fit>
-              and process them <span style={txtColor('#ddd')}>one at a time</span>
+              and process them <span style={ txtColor("#ddd") }>one at a time</span>
             </Text>
-            <Text italic bold fit textColor="js_prime">
+            <Text italic bold fit textColor="jsPrime">
               single-threaded
             </Text>
             <Text fit bold>
-              <span style={txtColor('#ddd')}>long</span> operations cause <S type="italic" style={txtColor('#FF9800')}>blocking</S>
+              <span style={ txtColor("#ddd") }>long</span> operations cause <S type="italic" style={ txtColor("#FF9800") }>blocking</S>
             </Text>
           </Slide>
 
           <CodeSlide
-            transition={["slide"]}
+            transition={ ["slide"] }
             lang="js"
-            code={code.callstack}
+            code={ code.callstack }
             ranges={[
               { loc: [0, 15], title: "Let's do like an engine" },
               { loc: [0, 4], note: "define function \"getTheAnswer\"" },
@@ -215,15 +191,14 @@ export default class Presentation extends React.Component {
               { loc: [8, 9], note: "get back with return value \"42\""},
               { loc: [9, 10], note: "nothing to execute, exiting function"},
               { loc: [11, 12], note: "function executed"},
-              { loc: [12, 13], note: "wow!", title: "That's all, Folks!" },
-            ]}
-          />
-          
+              { loc: [12, 13], note: "wow!", title: "That's all, Folks!" }
+            ]} />
+
           <Slide notes="what engine consists of<br>
           the heap - for memory allocation<br>
           callstack - the sake of execution">
-            <Heading fit size={4} textColor="js_prime" style={shadowStyle('light')}>V8, SpiderMonkey, ChakraCore</Heading>
-            <Heading size={3} textColor="#f5f5f5" style={shadowStyle('dark')}>heap + call stack</Heading>
+            <Heading fit size={4} textColor="jsPrime" style={ shadowStyle("light") }>V8, SpiderMonkey, ChakraCore</Heading>
+            <Heading size={3} textColor="#f5f5f5" style={ shadowStyle("dark") }>heap + call stack</Heading>
             <Layout>
               <Fill>
                 <Image src={images.engine.heap.replace("/", "")} height="400px"/>
@@ -235,9 +210,9 @@ export default class Presentation extends React.Component {
           </Slide>
 
           <CodeSlide
-            transition={["slide"]}
+            transition={ ["slide"] }
             lang="js"
-            code={code.calc}
+            code={ code.calc }
             ranges={[
               { loc: [0, 17], title: "Wierd Math Example" },
               { loc: [0, 17], title: "y = x + x²" },
@@ -260,15 +235,14 @@ export default class Presentation extends React.Component {
               { loc: [9, 10], note: "[ solve(12) ]\n[ console.log(solve(12)) ]" },
               { loc: [10, 11], note: "[ solve(12) ]\n[ console.log(solve(12)) ]" },
               { loc: [12, 15], note: "[ console.log(solve(12)) ]" },
-              { loc: [15, 16], note: React.createElement('span', { dangerouslySetInnerHTML: {__html: "&#x2728;"}})},
+              { loc: [15, 16], note: React.createElement("span", { dangerouslySetInnerHTML: {__html: "&#x2728;"}})},
               { loc: [15, 16] }
-            ]}
-          />
+            ]} />
 
           <CodeSlide
-            transition={["slide"]}
+            transition={ ["slide"] }
             lang="js"
-            code={code.callstackError}
+            code={ code.callstackError }
             notes="what's happen when error occur<br>
             let's simulate an error thrown<br>
             error stops execution<br>"
@@ -281,22 +255,21 @@ export default class Presentation extends React.Component {
               { loc: [1, 3], note: "[ oops() ]\n[ foo() ]\n[ bar() ]" },
               {
                 loc: [1, 3],
-                note: React.createElement('img', {
+                note: React.createElement("img", {
                   src: images.callstack.error,
-                  style: { width: '100%' }
+                  style: { width: "100%" }
                 })
               }
-             ]}
-          />
+            ]} />
 
           <CodeSlide
-            transition={["slide"]}
+            transition={ ["slide"] }
             lang="js"
             notes="to understand recursion you must understand recursion<br>
             but js engine doesn't care<br>
             it will watch for your code<br>
             and prevent long execution"
-            code={code.callstackLoop}
+            code={ code.callstackLoop }
             ranges={[
               { loc: [0, 7], title: "Recursion" },
               { loc: [0, 4], note: "function 'foo' that calls itself" },
@@ -310,31 +283,30 @@ export default class Presentation extends React.Component {
               { loc: [1, 3], note: "[ foo() ]\n".repeat(21) },
               {
                 loc: [1, 3],
-                note: React.createElement('img', {
+                note: React.createElement("img", {
                   src: images.callstack.loop,
-                  style: { width: '100%' }
+                  style: { width: "100%" }
                 })
               }
-             ]}
-          />
+            ]} />
 
           <Slide notes="what does it mean from engine point?">
-            <Heading fit size={2} textColor="js_prime" style={shadowStyle('light')}>
+            <Heading fit size={2} textColor="jsPrime" style={ shadowStyle("light") }>
               …blocking…
             </Heading>
           </Slide>
 
           <CodeSlide
-            transition={["slide"]}
+            transition={ ["slide"] }
             lang="js"
             notes="consider we have long running function<br>
             executing this function will block call stack<br>
             as it's run code lines one after the other<br>
             it's not going to do something before heavy calculations is done"
-            code={code.blocking}
+            code={ code.blocking }
             ranges={[
               { loc: [0, 14], title: "Blocking" },
-              { loc: [0, 9], note: '"sleep" function' },
+              { loc: [0, 9], note: "\"sleep\" function" },
               { loc: [9, 10], note: "[ console.log(…) ]" },
               { loc: [9, 10], note: " " },
               { loc: [10, 11], note: " [ sleep(10) ] " },
@@ -347,30 +319,28 @@ export default class Presentation extends React.Component {
                     display: "block",
                     margin: " auto"
                   }
-                 })
+                })
               },
-              { loc: [11, 12], note: '[ console.log(…) ]' },
-              { loc: [12, 14], note: React.createElement('span', { dangerouslySetInnerHTML: {__html: "&#x2728;"}})}
-            ]}
-          />
+              { loc: [11, 12], note: "[ console.log(…) ]" },
+              { loc: [12, 14], note: React.createElement("span", { dangerouslySetInnerHTML: {__html: "&#x2728;"}})}
+            ]} />
 
-          <Slide bgColor="js_slave"
+          <Slide bgColor="jsSlave"
             notes="what does it mean from browser point<br>
             if we call some have computation<br>
             browser will be 'frozen'<br>
             and won't react until callstack is unblocked">
             <Layout>
               <Fill>
-                <Heading size={3} textColor="js_prime">index.html</Heading>
-                <CodePane lang="html"
-                      source={code.blockingDemo} />
+                <Heading size={3} textColor="jsPrime">index.html</Heading>
+                <CodePane lang="html" source={ code.blockingDemo } />
               </Fill>
               <Fill>
-                <Heading size={3} textColor="js_prime">browser</Heading>
+                <Heading size={3} textColor="jsPrime">browser</Heading>
                 <div>&nbsp;</div>
                 <SleepySpinny />
                 <Link href="https://jsfiddle.net/d1wx1rjd/1/"
-                      textColor="js_prime">jsfiddle.net/d1wx1rjd</Link>
+                  textColor="jsPrime">jsfiddle.net/d1wx1rjd</Link>
               </Fill>
             </Layout>
           </Slide>
@@ -381,16 +351,14 @@ export default class Presentation extends React.Component {
           not only bytes transfer – dns, https, redirects<br>
           then we need to decode recieved bytes<br>
           translate them in language object<br>
-          so if ajax would be sync end user will have problems"
-                 bgColor="js_slave">
+          so if ajax would be sync end user will have problems" bgColor="jsSlave">
             <Layout>
               <Fill>
-                <Heading size={3} textColor="js_prime">index.html</Heading>
-                <CodePane lang="html"
-                      source={code.blockingAjax} />
+                <Heading size={3} textColor="jsPrime">index.html</Heading>
+                <CodePane lang="html" source={ code.blockingAjax } />
               </Fill>
               <Fill>
-                <Heading size={3} textColor="js_prime">browser</Heading>
+                <Heading size={3} textColor="jsPrime">browser</Heading>
                 <div>&nbsp;</div>
                 <FakeAjax />
               </Fill>
@@ -398,34 +366,33 @@ export default class Presentation extends React.Component {
           </Slide>
 
           <Slide>
-            <Heading size={4} fit textColor="js_prime" style={shadowStyle('light')}>…but, where is all async &#x2728; magic?!?!</Heading>
+            <Heading size={4} fit textColor="jsPrime" style={ shadowStyle("light") }>…but, where is all async &#x2728; magic?!?!</Heading>
             <Appear fid="1">
               <Image src={images.fun.crying.replace("/", "")} width="60%"/>
             </Appear>
           </Slide>
 
-          <Slide bgColor="js_slave">
-            <Heading textColor="js_prime">the</Heading>
-            <Heading fit textColor="js_prime">Browser</Heading>
+          <Slide bgColor="jsSlave">
+            <Heading textColor="jsPrime">the</Heading>
+            <Heading fit textColor="jsPrime">Browser</Heading>
           </Slide>
 
           <Slide notes="exept JS engine browser has plenty of stuff</br>
           WEB APIs - the web platform parts<br>
           callback queue and mysterious event loop">
-            <Heading size={2} textColor="js_prime">browser internals</Heading>
+            <Heading size={2} textColor="jsPrime">browser internals</Heading>
 
             <Image height="80vh" src={images.browser.replace("/", "")} />
           </Slide>
 
-          <Slide notes="let's start on simple and check how timeout works"
-                 bgColor="js_slave">
-            <Heading size={4} textColor="js_prime">How does setTimeout works?</Heading>
+          <Slide notes="let's start on simple and check how timeout works" bgColor="jsSlave">
+            <Heading size={4} textColor="jsPrime">How does setTimeout works?</Heading>
 
             <Layout>
               <Fill>
                 <Heading size={5} textColor="#eee">code</Heading>
                 <CodePane lang="js"
-                      source={code.setTimeout} />
+                  source={ code.setTimeout } />
               </Fill>
               <Fill>
                 <Heading size={5} textColor="#eee">console</Heading>
@@ -436,16 +403,16 @@ export default class Presentation extends React.Component {
           </Slide>
 
           <CodeSlide
-            transition={["slide"]}
+            transition={ ["slide"] }
             lang="js"
             notes="to understand it we need to became JS engine again<br>
             assume black bar in bottom represent our callstack"
-            code={code.setTimeout}
+            code={ code.setTimeout }
             ranges={[
               { loc: [0, 9], title: "setTimeout", note: "" },
               { loc: [0, 1], note: "  " },
               { loc: [0, 1], note: "[ console.log(\"Hello\") ]" },
-              { loc: [0, 1], note: React.createElement('span', { dangerouslySetInnerHTML: {__html: "&nbsp;"}}) },
+              { loc: [0, 1], note: React.createElement("span", { dangerouslySetInnerHTML: {__html: "&nbsp;"}}) },
               { loc: [2, 6], note: "[ setTimeout(...) ]" },
               { loc: [2, 6], note: "  " },
               { loc: [6, 7], note: "[ console.log(\"people!\") ]" },
@@ -462,16 +429,15 @@ export default class Presentation extends React.Component {
                   style: {
                     color: "yellow"
                   }
-                }, "demo") },
-            ]}
-          />
+                }, "demo") }
+            ]} />
 
           <CodeSlide
-            transition={["slide"]}
+            transition={ ["slide"] }
             lang="js"
             notes="oh well! what about ajax?<br>
             spinning hourglasses means that web api executes some call"
-            code={code.ajax}
+            code={ code.ajax }
             ranges={[
               { loc: [0, 10], title: "AJAX" },
               { loc: [0, 1], note: "   " },
@@ -492,49 +458,48 @@ export default class Presentation extends React.Component {
               { loc: [5, 6], note: "[ console.log(data) ]\n[ anonymous function  ]" },
               { loc: [4, 7], note: "[ anonymous function  ]" },
               { loc: [10, 11], note: "   " }
-            ]}
-          />
+            ]} />
 
           <Slide note="">
             <Image height="80vh" src={images.browser.replace("/", "")} />
           </Slide>
 
-          <Slide bgColor="js_slave">
-            <Heading fit size={3} textColor="js_prime">the Event Loop</Heading>
+          <Slide bgColor="jsSlave">
+            <Heading fit size={3} textColor="jsPrime">the Event Loop</Heading>
             <Appear fid="1">
               <Link href="http://latentflip.com/loupe/?code=Y29uc29sZS5sb2coIkhpISIpOwoKJC5vbignYnV0dG9uJywgJ2NsaWNrJywgZnVuY3Rpb24gb25DbGljaygpIHsKICAgIGNvbnNvbGUubG9nKCdZb3UgY2xpY2tlZCB0aGUgYnV0dG9uIScpOyAgICAKfSk7CgpzZXRUaW1lb3V0KGZ1bmN0aW9uIHRpbWVvdXQoKSB7CiAgICBjb25zb2xlLmxvZygiQ2xpY2sgdGhlIGJ1dHRvbiEiKTsKfSwgNTAwMCk7Cgpjb25zb2xlLmxvZygiV2VsY29tZSB0byBsb3VwZS4iKTs%3D!!!PGJ1dHRvbj5DbGljayBtZSE8L2J1dHRvbj4%3D"
-                    textColor="js_prime">demo time!</Link>
+                textColor="jsPrime">demo time!</Link>
             </Appear>
           </Slide>
 
-          <Slide>
-            <Heading size={2} textColor="js_prime">Let's recap</Heading>
-            <List>
+          <Slide bgColor="#333">
+            <Heading size={2} textColor="jsPrime">Let's recap</Heading>
+            <List textColor="#eee">
               <Appear>
                 <ListItem>
-                  <Heading size={4}>JavaScript is single threaded</Heading>
+                  <Heading size={4} textColor="#eee">JavaScript is single threaded*</Heading>
                 </ListItem>
               </Appear>
               <Appear>
                 <ListItem>
-                  <Heading size={4}>Long operations cause blocking</Heading>
+                  <Heading size={4} textColor="#eee">Long operations cause blocking</Heading>
                 </ListItem>
               </Appear>
               <Appear>
                 <ListItem>
-                  <Heading size={4}>Call stack blocking cause “freezing”</Heading>
+                  <Heading size={4} textColor="#eee">Call stack blocking cause “freezing”</Heading>
                 </ListItem>
               </Appear>
               <Appear>
                 <ListItem>
-                  <Heading size={4}>Async magic is a browser benefit</Heading>
+                  <Heading size={4} textColor="#eee">Async magic is a browser benefit</Heading>
                 </ListItem>
               </Appear>
             </List>
           </Slide>
 
           <Slide>
-            <Heading size={5} textColor="js_prime">Useful Links</Heading>
+            <Heading size={5} textColor="jsPrime">Useful Links</Heading>
 
             <List>
               <ListItem>
